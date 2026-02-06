@@ -20,9 +20,21 @@ app.get("/random", (req, res) => {
 
 // Respond with a single joke with the requested joke id.
 app.get("/jokes/:id", (req, res) => {
-  const jokeId = req.params.id - 1;
+  const jokeId = parseInt(req.params.id)- 1;
   res.json(jokes[jokeId]);
 });
+
+
+// Filters all the jokes by their joke type.
+app.get("/filter", (req, res) => {
+  const type = req.query.type;
+  const filteredJokes = jokes.filter((joke) => joke.jokeType === type);
+  res.json(filteredJokes);
+});
+
+
+
+
 
 
 
