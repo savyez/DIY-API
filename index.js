@@ -8,8 +8,16 @@ const port = 3000;
 dotenv.config();
 const masterKey = process.env.masterKey;
 
-
 app.use(bodyParser.urlencoded({ extended: true }));
+
+
+// Get a random joke from the Joke API
+app.get("/random", (req, res) => {
+  const randomJoke = jokes[Math.floor(Math.random()*100)];
+  res.json(randomJoke);
+});
+
+
 
 
 
