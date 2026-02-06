@@ -5,8 +5,12 @@ import dotenv from "dotenv";
 const app = express();
 const port = 3000;
 
-dotenv.config();
-const masterKey = process.env.masterKey;
+dotenv.config(
+  {
+    path: ".env",
+  }
+);
+const masterKey = process.env.Master_Key;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -81,15 +85,30 @@ app.delete("/jokes/:id", (req, res) => {
   const index = jokes.findIndex((joke) => joke.id === id);
   if(index > -1) {
     jokes.splice(index, 1);
-    res.status(200);
+    res.sendStatus(200);
   } else {
     res.status(404).json({
       error: `joke with id: ${id} does not exist.`
     });
   }
-  console.log(jokes);
 })
 
+
+// Delete all jokes in the bank.
+app.delete("/all", (req, res) => {
+  const userKey = req.query.key;
+  if(userKey === masterKey) {
+    jokes.splice(0, jokes.length);
+    res.sendStatus(200);
+  } else {
+    res
+      .status(404)
+      .json({
+        error: `your key did not match to master key.`
+      });
+  }
+  console.log(jokes);
+});
 
 
 app.listen(port, () => {
