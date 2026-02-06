@@ -33,6 +33,17 @@ app.get("/filter", (req, res) => {
 });
 
 
+// Create a new joke to add into the bank of jokes.
+app.post("/jokes", (req, res) => {
+  const NewJoke = {
+    id : jokes.length +1,
+    jokeText: req.body.text,
+    jokeType: req.body.type,
+  }
+  jokes.push(NewJoke);
+  res.json(NewJoke);
+});
+
 
 
 
