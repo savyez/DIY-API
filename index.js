@@ -59,6 +59,22 @@ app.put("/jokes/:id", (req, res) => {
 });
 
 
+// Edit a joke for the id that is specified in the path parameter.
+app.patch("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = jokes.findIndex((joke) => joke.id === id);
+  if(req.body.text) {
+    const text = req.body.text;
+    jokes[index].jokeText = text;
+  }
+  if(req.body.type) {
+    const type = req.body.type;
+    jokes[index].jokeType = type;
+  }
+  res.json(jokes[index]);
+})
+
+
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);
