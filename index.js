@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Get a random joke from the Joke API
 app.get("/random", (req, res) => {
-  const randomJoke = jokes[Math.floor(Math.random()*100)];
+  const randomJoke = jokes[Math.floor(Math.random()*jokes.length)];
   res.json(randomJoke);
 });
 
@@ -72,6 +72,22 @@ app.patch("/jokes/:id", (req, res) => {
     jokes[index].jokeType = type;
   }
   res.json(jokes[index]);
+})
+
+
+// Delete a joke based on the path parameter provided for the joke id
+app.delete("/jokes/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = jokes.findIndex((joke) => joke.id === id);
+  if(index > -1) {
+    jokes.splice(index, 1);
+    res.status(200);
+  } else {
+    res.status(404).json({
+      error: `joke with id: ${id} does not exist.`
+    });
+  }
+  console.log(jokes);
 })
 
 
