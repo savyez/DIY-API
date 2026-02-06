@@ -18,6 +18,11 @@ app.get("/random", (req, res) => {
 });
 
 
+// Respond with a single joke with the requested joke id.
+app.get("/jokes/:id", (req, res) => {
+  const jokeId = req.params.id - 1;
+  res.json(jokes[jokeId]);
+});
 
 
 
