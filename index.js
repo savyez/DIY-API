@@ -45,7 +45,18 @@ app.post("/jokes", (req, res) => {
 });
 
 
-
+// replace a joke based on the path parameter id specified.
+app.put("/jokes/:id", (req, res) => {
+  const jokeId = parseInt(req.params.id);
+  const replacedJoke = {
+    id : jokeId,
+    jokeText : req.body.text,
+    jokeType : req.body.type,
+  }
+  const index = jokes.findIndex((joke) => joke.id === jokeId);
+  jokes[index] = replacedJoke;
+  res.json(replacedJoke);
+});
 
 
 
